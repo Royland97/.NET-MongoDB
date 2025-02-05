@@ -1,0 +1,124 @@
+﻿@model UserInterface.Web.ViewModels.Yelp.BusinessModel
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Edit</h1>
+
+<h4>Business</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="EditForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitude" class="control-label"></label>
+                <input asp-for="Longitude" class="form-control" />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stars" class="control-label"></label>
+                <input asp-for="Stars" class="form-control" />
+                <span asp-validation-for="Stars" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewCount" class="control-label"></label>
+                <input asp-for="ReviewCount" class="form-control" />
+                <span asp-validation-for="ReviewCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsOpen" class="control-label"></label>
+                <input asp-for="IsOpen" class="form-control" />
+                <span asp-validation-for="IsOpen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div id="successMessage" style="display:none; color: green;">
+    ¡Formulario enviado exitosamente!
+</div>
+
+<script>
+    document.getElementById('EditForm').onsubmit = function (event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
+
+        // Crear el objeto JSON con los datos del formulario
+        const formData = {
+            Id: document.getElementById('Id').value,
+            Name: document.getElementById('Name').value,
+            Address: document.getElementById('Address').value,
+            City: document.getElementById('City').value,
+            State: document.getElementById('State').value,
+            PostalCode: document.getElementById('PostalCode').value,
+            Latitude: document.getElementById('Latitude').value,
+            Longitude: document.getElementById('Longitude').value,
+            Stars: document.getElementById('Stars').value,
+            ReviewCount: document.getElementById('ReviewCount').value,
+            IsOpen: document.getElementById('IsOpen').value
+        };
+
+        // Enviar el formulario como JSON usando AJAX (fetch)
+        fetch('/yelp/business/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'  // Indicar que estamos enviando JSON
+            },
+            body: JSON.stringify(formData)  // Convertir el objeto de datos a formato JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('EditForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Core.Domain
 {
@@ -8,9 +9,11 @@ namespace Core.Domain
     public abstract class Entity
     {
         /// <summary>
-        /// Entity ID.
+        /// Object Id.
         /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; protected set; }
+        [BsonId]
+        [BsonElement("_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; protected set; }
     }
 }

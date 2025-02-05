@@ -1,4 +1,4 @@
-﻿using Core.Domain.Users;
+﻿using Core.Domain.Yelp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -61,9 +61,7 @@ namespace UserInterface.Web.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("ActiveUser", user.Active.ToString())
+                new Claim(ClaimTypes.Name, user.Name),
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);

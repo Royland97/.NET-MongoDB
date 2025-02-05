@@ -1,20 +1,17 @@
-using Microsoft.Extensions.FileProviders;
 using Microsoft.EntityFrameworkCore;
 using UserInterface.Web.ViewModels;
 using UserInterface.Web.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Core.DataAccess.IRepository.Users;
-using Infrastructure.DataAccess.Repository.Users;
 using UserInterface.Web.Installation;
 using Infrastructure.DataAccess.EntityFrameworkCore;
-using Core.Domain.Users;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using Core.DataAccess.IRepository.Loan;
-using Infrastructure.DataAccess.Repository.Loan;
 using Infrastructure.Services.AccessExternalApi;
+using Core.DataAccess.IRepository.Yelp;
+using Infrastructure.DataAccess.Repository.Yelp;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UserInterface.Web
 {
@@ -42,15 +39,9 @@ namespace UserInterface.Web
             #region Services
 
             //DBContext
-            builder.Services.AddDbContext<ApplicationDbContext>(
-                options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"), b => b.MigrationsAssembly("UserInterface.Web"));
-                    //options.UseSqlServer(builder.Configuration.GetConnectionString("DockerSqlServer"), b => b.MigrationsAssembly("UserInterface.Web"));
-                    //options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"), b => b.MigrationsAssembly("UserInterface.Web"));
-                }
-            );
-                
+            builder.Services.AddDbContext<ApplicationDbContext>(options => 
+                options.UseMongoDB(builder.Configuration.GetConnectionString("MongoDB"), "yelp"));
+
             //Authentication and Authorization
             builder.Services.AddAuthentication(options =>
             {
@@ -83,29 +74,6 @@ namespace UserInterface.Web
                 options.ForwardDefault = JwtBearerDefaults.AuthenticationScheme;
             });
 
-            //Identity
-            builder.Services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-            
-            builder.Services.Configure<IdentityOptions>(options =>
-            {
-                //SignIn settings
-                //options.SignIn.RequireConfirmedEmail = true;
-
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 1;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
-            });
-            
             //CORS
             builder.Services.AddCors(options =>
             {
@@ -118,8 +86,9 @@ namespace UserInterface.Web
                     });
             });
 
-            builder.Services.AddAutoMapper(typeof(BaseProfile));
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+            builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
@@ -152,22 +121,31 @@ namespace UserInterface.Web
             });
 
             //Dependencies
-            builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-            builder.Services.AddScoped(typeof(IRoleRepository), typeof(RoleRepository));
-            builder.Services.AddScoped(typeof(IResourceRepository), typeof(ResourceRepository));
-            builder.Services.AddScoped(typeof(IInstallResources), typeof(InstallResources));
             builder.Services.AddScoped(typeof(IEndPointServices), typeof(EndPointServices));
             builder.Services.AddScoped(typeof(ITokenServices), typeof(TokenServices));
             builder.Services.AddScoped(typeof(IHostNameServices), typeof(HostNameServices));
-            builder.Services.AddScoped(typeof(IPersonRepository), typeof(PersonRepository));
-            builder.Services.AddScoped(typeof(IPaymentRepository), typeof(PaymentRepository));
-
+            builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            builder.Services.AddScoped(typeof(IBusinessRepository), typeof(BusinessRepository));
+            builder.Services.AddScoped(typeof(IChekinRepository), typeof(ChekinRepository));
+            builder.Services.AddScoped(typeof(IReviewRepository), typeof(ReviewRepository));
+            builder.Services.AddScoped(typeof(ITipRepository), typeof(TipRepository));
+            
             #endregion
 
             #region Middleware
 
             var app = builder.Build();
-            
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -183,17 +161,11 @@ namespace UserInterface.Web
                 }
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-            /*
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Static")),
-                RequestPath = "/Static"
-            });*/
+            //app.UseSwagger();
+            //app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors("AllowAllCorsPolicy");
@@ -201,8 +173,11 @@ namespace UserInterface.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllers();
-            
+            app.MapControllers();/*
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            */
             app.Run();
 
             #endregion

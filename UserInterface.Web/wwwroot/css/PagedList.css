@@ -1,0 +1,69 @@
+﻿namespace UserInterface.Web.wwwroot.css
+
+    /* Contenedor de la paginación */
+    .paged-list
+
+{
+    display: flex;
+    justify-content: center; /* Centra los elementos */
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Estilos para los botones de paginación */
+.paged-list a,
+.paged-list button {
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color de texto */
+    padding: 10px 15px; /* Espaciado interno */
+    margin: 0 5px; /* Espaciado entre los botones */
+    text-decoration: none; /* Quita el subrayado */
+    border: 1px solid #007bff; /* Borde del botón */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    /* Estilos cuando el botón está deshabilitado */
+    .paged-list button[disabled],
+    .paged-list a.disabled {
+        background-color: #cccccc; /* Fondo gris para botones deshabilitados */
+        color: #666666; /* Color de texto gris */
+        border-color: #cccccc; /* Borde gris */
+        cursor: not-allowed; /* Deshabilita el cursor */
+    }
+
+/* Estilo del botón activo o página actual */
+.paged-list .active a,
+.paged-list .active button {
+    background-color: #28a745; /* Fondo verde para la página activa */
+    border-color: #28a745; /* Borde verde */
+}
+
+/* Estilo para los botones de "Primera" y "Última" */
+.paged-list .first,
+.paged-list .last {
+    background-color: #6c757d; /* Fondo gris oscuro */
+    border-color: #6c757d; /* Borde gris oscuro */
+}
+
+/* Efectos de hover (cuando el mouse pasa sobre el botón) */
+.paged-list a:hover,
+.paged-list button:hover {
+    background-color: #0056b3; /* Fondo azul más oscuro */
+    border-color: #0056b3; /* Borde azul más oscuro */
+}
+
+/* Estilo cuando se pasa el ratón por la página activa */
+.paged-list .active a:hover,
+.paged-list .active button:hover {
+    background-color: #28a745; /* No cambia el color de la página activa */
+    border-color: #28a745; /* No cambia el borde de la página activa */
+}
+
+/* Añadir un margen superior a los botones para un mejor espaciado */
+.paged-list a,
+.paged-list button {
+    margin-top: 5px;
+}
+  

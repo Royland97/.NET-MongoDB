@@ -13,9 +13,6 @@ namespace Infrastructure.DataAccess.EntityFrameworkCore
             modelBuilder.Entity<Entity>(b =>
             {
                 b.HasKey("Id");
-                b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
             });
         }
     }
