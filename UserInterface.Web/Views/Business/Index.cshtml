@@ -1,13 +1,21 @@
 ﻿@using UserInterface.Web.ViewModels.Yelp
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<BusinessModel>
-<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+@*<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />*@
 
 @{
     ViewBag.Title = "Business List";
 }
 <h1>Business</h1>
-<p>+ de 4 Stars</p>
+<p>+ 4 Stars</p>
+
+<form asp-controller="Business" asp-action="Index" method="GET">
+    <p>
+        <label>Name: <input type="text" name="search" /></label>
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>

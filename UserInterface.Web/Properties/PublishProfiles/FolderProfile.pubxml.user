@@ -4,13 +4,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>D:\Documentos\Marco\Publish</_PublishTargetUrl>
-    <History>True|2024-05-20T15:53:13.1895635Z;True|2024-05-17T13:26:59.9254474-05:00;True|2024-05-17T13:24:08.7992648-05:00;True|2024-05-17T13:20:15.9015720-05:00;True|2024-05-17T12:56:05.9696850-05:00;True|2024-05-17T11:06:44.7470114-05:00;False|2024-05-17T11:05:59.9505698-05:00;True|2024-05-17T11:03:16.5010775-05:00;True|2024-05-17T10:57:39.0252990-05:00;True|2024-05-14T12:27:00.6165012-05:00;True|2024-05-14T12:25:49.8865381-05:00;True|2024-05-14T12:19:45.5902247-05:00;True|2024-05-14T11:44:27.4513588-05:00;False|2024-05-14T11:37:03.4989944-05:00;True|2024-05-13T21:58:56.6061424-05:00;True|2024-05-13T21:30:50.1239667-05:00;False|2024-05-13T21:30:05.4709486-05:00;True|2024-05-13T08:56:07.9103389-05:00;</History>
+    <_PublishTargetUrl>D:\Documentos\Master\C1\Almacenamiento y Gestion de la Informacion\MongoDB\Proyecto\Publish</_PublishTargetUrl>
+    <History>True|2025-02-05T21:52:18.3463615Z||;True|2025-02-05T22:47:37.3916338+01:00||;True|2025-02-05T22:07:35.9737454+01:00||;True|2024-05-20T17:53:13.1895635+02:00||;True|2024-05-17T20:26:59.9254474+02:00||;True|2024-05-17T20:24:08.7992648+02:00||;True|2024-05-17T20:20:15.9015720+02:00||;True|2024-05-17T19:56:05.9696850+02:00||;True|2024-05-17T18:06:44.7470114+02:00||;False|2024-05-17T18:05:59.9505698+02:00||;True|2024-05-17T18:03:16.5010775+02:00||;True|2024-05-17T17:57:39.0252990+02:00||;True|2024-05-14T19:27:00.6165012+02:00||;True|2024-05-14T19:25:49.8865381+02:00||;True|2024-05-14T19:19:45.5902247+02:00||;True|2024-05-14T18:44:27.4513588+02:00||;False|2024-05-14T18:37:03.4989944+02:00||;True|2024-05-14T04:58:56.6061424+02:00||;True|2024-05-14T04:30:50.1239667+02:00||;False|2024-05-14T04:30:05.4709486+02:00||;True|2024-05-13T15:56:07.9103389+02:00||;</History>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
-    <DestinationConnectionStrings Include="PostgreSQL">
-      <Value>Host=localhost%3b Port=5432 %3b Database=ApiTest %3b Username= postgres%3b Password=123 %3b TrustServerCertificate=True%3b</Value>
+    <DestinationConnectionStrings Include="MongoDB">
+      <Value>mongodb://localhost:27017</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
 </Project>

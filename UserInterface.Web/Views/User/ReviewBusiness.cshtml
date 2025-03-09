@@ -1,23 +1,22 @@
 ﻿@using Core.Domain.Yelp
 @using UserInterface.Web.ViewModels.Yelp
 @using X.PagedList.Mvc.Core;
-@model X.PagedList.IPagedList<Review>
+@model X.PagedList.IPagedList<ReviewBusiness>
 <link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Reviews";
+    ViewBag.Title = "User Reviews";
 }
 <h1>Reviews</h1>
-<p>+ 4 Stars</p>
 <table class="table">
     <thead>
         <tr>
-            <th>Text</th>
-            <th>Stars</th>
-            <th>Useful</th>
-            <th>Funny</th>
-            <th>Cool</th>
+            <th>Review</th>
             <th>Date</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
         </tr>
     </thead>
     <tbody>
@@ -25,11 +24,11 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Text)</td>
-                <td>@Html.DisplayFor(modelItem => item.Stars)</td>
-                <td>@Html.DisplayFor(modelItem => item.Useful)</td>
-                <td>@Html.DisplayFor(modelItem => item.Funny)</td>
-                <td>@Html.DisplayFor(modelItem => item.Cool)</td>
                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>@Html.DisplayFor(modelItem => item.State)</td>
             </tr>
         }
     </tbody>
@@ -37,7 +36,7 @@
 <br />
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Reviews", new { page }))
+@Html.PagedListPager(Model, page => Url.Action("ReviewBusiness", new { page }))
 
 <div>
     <a asp-action="Index">Back to List</a>

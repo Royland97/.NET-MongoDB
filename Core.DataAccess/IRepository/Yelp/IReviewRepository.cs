@@ -10,5 +10,12 @@ namespace Core.DataAccess.IRepository.Yelp
         /// <param name="BusinessId"></param>
         /// <returns></returns>
         IEnumerable<Review> GetReviewByBusinessId(string BusinessId);
+
+        //// <summary>
+        /// Obtiene todas las review dado un userId y la informacion de los business
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        List<ReviewBusiness> GetReviewBusinessByUserId(string userId);
     }
 }

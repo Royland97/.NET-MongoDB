@@ -13,5 +13,7 @@ namespace UserInterface.Web.ViewModels.Yelp
         public int IsOpen { get; set; }
         public List<String> Categories { get; set; }
         public BusinessHours? Hours { get; set; }
+        public List<String> Chekin {  get; set; }
+        public int ChekinCount { get; set; }
     }
 }

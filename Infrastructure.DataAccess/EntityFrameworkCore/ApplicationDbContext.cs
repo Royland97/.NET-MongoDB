@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Yelp;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Infrastructure.DataAccess.EntityFrameworkCore
@@ -9,8 +10,6 @@ namespace Infrastructure.DataAccess.EntityFrameworkCore
     /// </summary>                                   
     public class ApplicationDbContext: DbContext
     {
-        #region Constructor
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -26,13 +25,29 @@ namespace Infrastructure.DataAccess.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().ToCollection("user");
-            modelBuilder.Entity<Business>().ToCollection("business");
-            modelBuilder.Entity<Chekin>().ToCollection("chekin");
-            modelBuilder.Entity<Review>().ToCollection("review");
-            modelBuilder.Entity<Tip>().ToCollection("tips");
-        }
+            modelBuilder.Entity<User>()
+                .ToCollection("user")
+                .HasIndex(i => i.UserId)
+                .HasCreateIndexOptions(new CreateIndexOptions { Background = true });
 
-        #endregion
+            modelBuilder.Entity<Business>()
+                .ToCollection("business")
+                .HasIndex(i => i.BusinessId)
+                .HasCreateIndexOptions(new CreateIndexOptions { Background = true });
+
+            modelBuilder.Entity<Chekin>()
+                .ToCollection("chekin");
+
+            modelBuilder.Entity<Review>().
+                ToCollection("review")
+                .HasIndex(i => i.BusinessId)
+                .HasCreateIndexOptions(new CreateIndexOptions { Background = true });
+
+            modelBuilder.Entity<Tip>()
+                .ToCollection("tips")
+                .HasIndex(i => i.BusinessId)
+                .HasCreateIndexOptions(new CreateIndexOptions { Background = true });
+
+        }
     }
 }

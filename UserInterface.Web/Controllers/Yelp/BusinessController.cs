@@ -3,6 +3,7 @@ using Core.DataAccess.IRepository.Yelp;
 using Core.Domain.Yelp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using UserInterface.Web.ViewModels.Yelp;
 using X.PagedList.Extensions;
 
@@ -18,15 +19,18 @@ namespace UserInterface.Web.Controllers.Yelp
         private readonly IMapper _mapper;
         private readonly IBusinessRepository _businessRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly IChekinRepository _chekinRepository;
 
         public BusinessController(
             IMapper mapper,
             IBusinessRepository businessRepository,
-            IReviewRepository reviewRepository)
+            IReviewRepository reviewRepository,
+            IChekinRepository chekinRepository)
         {
             _mapper = mapper;
             _businessRepository = businessRepository;
             _reviewRepository = reviewRepository;
+            _chekinRepository = chekinRepository;
         }
 
         /// <summary>
@@ -34,9 +38,10 @@ namespace UserInterface.Web.Controllers.Yelp
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index(
-            int? page)
+            int? page,
+            string? search)
         {
-            var result = _businessRepository.GetBetterBusiness();
+            var result = _businessRepository.GetAllBusinesses(search);
             var businesss = _mapper.Map<ICollection<BusinessModel>>(result);
 
             int pageSize = 10;
@@ -61,11 +66,14 @@ namespace UserInterface.Web.Controllers.Yelp
             cancellationToken.ThrowIfCancellationRequested();
 
             var business = await _businessRepository.GetBusinessByBusinessId(id);
+            var chekin = await _chekinRepository.GetChekinByBusinessId(id);
 
             if (business == null)
                 return NotFound(id);
 
             var businessModel = _mapper.Map<BusinessModelDetails>(business);
+            businessModel.Chekin = chekin.Date;
+            businessModel.ChekinCount = chekin.Date.Count;
 
             return View(businessModel);
         }

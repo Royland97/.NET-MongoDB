@@ -1,5 +1,4 @@
 ﻿using Infrastructure.DataAccess.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace UserInterface.Web.Installation
 {

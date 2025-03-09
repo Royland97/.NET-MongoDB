@@ -16,13 +16,16 @@ namespace UserInterface.Web.Controllers.Yelp
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private readonly IReviewRepository _reviewRepository;
 
         public UserController(
             IMapper mapper,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IReviewRepository reviewRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
+            _reviewRepository = reviewRepository;
         }
 
         /// <summary>
@@ -30,9 +33,10 @@ namespace UserInterface.Web.Controllers.Yelp
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index(
-            int? page)
+            int? page,
+            string? search)
         {
-            var result = _userRepository.GetAllUsers();
+            var result = _userRepository.GetAllUsers(search);
             var users = _mapper.Map<ICollection<UserModel>>(result);
 
             int pageSize = 10;
@@ -46,17 +50,11 @@ namespace UserInterface.Web.Controllers.Yelp
         /// </summary>
         /// 
         /// <param name="id">User Id</param>
-        /// <param name="cancellationToken">
-        /// The <see cref="CancellationToken" /> used to propagate notifications that the operation should be canceled.
-        /// </param>
-        [HttpGet("/details/{id}")]
+        [HttpGet("/userDetails/{id}")]
         public async Task<IActionResult> Details(
-            [FromRoute] int id,
-            CancellationToken cancellationToken = default)
+            [FromRoute] string id)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var user = await _userRepository.GetByIdAsync(id, cancellationToken);
+            var user = _userRepository.GetUserByUserId(id);
 
             if (user == null)
                 return NotFound(id);
@@ -64,6 +62,27 @@ namespace UserInterface.Web.Controllers.Yelp
             var userModel = _mapper.Map<UserModel>(user);
 
             return View(userModel);
+        }
+
+        /// <summary>
+        /// Gets an User by Id.
+        /// </summary>
+        /// 
+        /// <param name="id">User Id</param>
+        [HttpGet("/reviewsBusiness/{id}")]
+        public async Task<IActionResult> ReviewBusiness(
+            int? page,
+            [FromRoute] string id)
+        {
+            var reviewBusinesses = _reviewRepository.GetReviewBusinessByUserId(id);
+
+            if (reviewBusinesses == null)
+                return NotFound(id);
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+
+            return View(reviewBusinesses.ToPagedList(pageNumber, pageSize));
         }
 
         /// <summary>

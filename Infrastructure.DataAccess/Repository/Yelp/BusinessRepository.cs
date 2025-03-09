@@ -1,8 +1,8 @@
-﻿using Core.DataAccess.Filter.Yelp;
-using Core.DataAccess.IRepository.Yelp;
+﻿using Core.DataAccess.IRepository.Yelp;
 using Core.Domain.Yelp;
 using Infrastructure.DataAccess.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace Infrastructure.DataAccess.Repository.Yelp
 {
@@ -24,19 +24,12 @@ namespace Infrastructure.DataAccess.Repository.Yelp
         /// Get all Business with filter options
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Business> GetAllBusinesses(BusinessFilter businessFilter)
+        public IEnumerable<Business> GetAllBusinesses(string search)
         {
-            var businesses = dbSet.AsNoTracking().AsEnumerable().Take(10);
+            if (!string.IsNullOrEmpty(search))
+                return dbSet.Where(p => p.Stars > 4 && p.ReviewCount > 500 && p.Name.Contains(search)).OrderByDescending(p => p.ReviewCount).AsNoTracking().AsEnumerable();
 
-            if(businessFilter != null)
-            {
-                if (!string.IsNullOrEmpty(businessFilter.Name))
-                    businesses = businesses.Where(b => b.Name.ToUpper().Equals(businessFilter.Name.ToUpper()));
-            }
-
-            businesses.OrderBy(c => c.Id);
-
-            return businesses;
+            return dbSet.Where(p => p.Stars > 4 && p.ReviewCount > 500).OrderByDescending(p => p.ReviewCount).AsNoTracking().AsEnumerable();
         }
 
         /// <summary>
@@ -53,9 +46,23 @@ namespace Infrastructure.DataAccess.Repository.Yelp
         /// </summary>
         /// <param name="businessId"></param>
         /// <returns></returns>
-        public Task<Business> GetBusinessByBusinessId(string businessId)
+        public async Task<Business> GetBusinessByBusinessId(string businessId)
         {
-            return dbSet.Where(p => p.BusinessId == businessId).FirstOrDefaultAsync();
+            return await dbSet.Where(p => p.BusinessId == businessId).FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Obtiene todos los estados 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<string>> GetAllStates()
+        {
+            IQueryable<string> stateQuery = from m in _context.Businesses
+                                            orderby m.State
+                                            select m.State;
+
+            return await stateQuery.Distinct().ToListAsync();
+        }
+
     }
 }

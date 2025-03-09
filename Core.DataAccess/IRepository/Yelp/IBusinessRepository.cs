@@ -9,7 +9,7 @@ namespace Core.DataAccess.IRepository.Yelp
         /// Get all Business with filter options
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Business> GetAllBusinesses(BusinessFilter businessFilter);
+        IEnumerable<Business> GetAllBusinesses(string search);
 
         /// <summary>
         /// Obtiene los negocios de 5 estrellas con mas de 500 reviews
@@ -23,5 +23,11 @@ namespace Core.DataAccess.IRepository.Yelp
         /// <param name="businessId"></param>
         /// <returns></returns>
         Task<Business> GetBusinessByBusinessId(string businessId);
+
+        /// <summary>
+        /// Obtiene todos los estados 
+        /// </summary>
+        /// <returns></returns>
+        Task<List<string>> GetAllStates();
     }
 }

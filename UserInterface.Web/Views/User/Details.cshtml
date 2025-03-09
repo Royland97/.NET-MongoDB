@@ -9,22 +9,23 @@
 <h3>@Html.DisplayFor(model => model.Name)</h3>
 
 <div class="row">
-    <div class="form-group">
-        <label>@Html.DisplayNameFor(model => model.ReviewCount):</label>
-        @Html.DisplayFor(model => model.ReviewCount)
-        <label>  </label>
-        <label>@Html.DisplayNameFor(model => model.YelpingSince):</label>
-        @Html.DisplayFor(model => model.YelpingSince)
-        <label>  </label>
-        <label>@Html.DisplayNameFor(model => model.Useful):</label>
-        @Html.DisplayFor(model => model.Useful)
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-4">
         <div class="form-group">
-            <label>@Html.DisplayNameFor(model => model.Funny)</label>
+            <label>@Html.DisplayNameFor(model => model.ReviewCount):</label>
+            @Html.DisplayFor(model => model.ReviewCount)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.YelpingSince):</label>
+            @Html.DisplayFor(model => model.YelpingSince)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.Useful):</label>
+            @Html.DisplayFor(model => model.Useful)
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.Funny):</label>
             @Html.DisplayFor(model => model.Funny)
         </div>
         <div class="form-group">
@@ -39,8 +40,59 @@
 </div>
 
 <div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentHot):</label>
+            @Html.DisplayFor(model => model.ComplimentHot)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentMore):</label>
+            @Html.DisplayFor(model => model.ComplimentMore)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentProfile):</label>
+            @Html.DisplayFor(model => model.ComplimentProfile)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentCute):</label>
+            @Html.DisplayFor(model => model.ComplimentCute)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentList):</label>
+            @Html.DisplayFor(model => model.ComplimentList)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentNote):</label>
+            @Html.DisplayFor(model => model.ComplimentNote)
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentPlain):</label>
+            @Html.DisplayFor(model => model.ComplimentPlain)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentCool):</label>
+            @Html.DisplayFor(model => model.ComplimentCool)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentFunny):</label>
+            @Html.DisplayFor(model => model.ComplimentFunny)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentWriter):</label>
+            @Html.DisplayFor(model => model.ComplimentWriter)
+        </div>
+        <div class="form-group">
+            <label>@Html.DisplayNameFor(model => model.ComplimentPhotos):</label>
+            @Html.DisplayFor(model => model.ComplimentPhotos)
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="form-group">
-        <label>@Html.DisplayNameFor(model => model.Elite):</label>
+        <label style="font-weight: bold;">@Html.DisplayNameFor(model => model.Elite):</label>
         @foreach (var item in Model.Elite)
         {
             @Html.DisplayFor(modelItem => item)

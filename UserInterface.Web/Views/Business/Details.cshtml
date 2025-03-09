@@ -40,13 +40,17 @@
 
 <div class="row">
     <div class="form-group">
-        <label>@Html.DisplayNameFor(model => model.Categories):</label>
+        <label style="font-weight: bold;">@Html.DisplayNameFor(model => model.Categories):</label>
         @foreach (var item in Model.Categories)
         {
             @Html.DisplayFor(modelItem => item)
             <label> | </label>
         }
     </div>
+</div>
+
+<div style="text-align: center; margin-top:10px">
+    <label for="input" style="font-weight: bold;">Business Hours</label>
 </div>
 <table class="table">
     <thead>
@@ -72,6 +76,18 @@
         </tr>
     </tbody>
 </table>
+
+<div class="row">
+    <div class="form-group">
+        <label style="font-weight: bold;">@Html.DisplayNameFor(model => model.Chekin) (@Html.DisplayFor(model => model.ChekinCount)):</label>
+        <br />
+        @foreach (var item in Model.Chekin)
+        {
+            @Html.DisplayFor(modelItem => item)
+            <label> | </label>
+        }
+    </div>
+</div>
 
 <div>
     <a asp-action="Index">Back to List</a>

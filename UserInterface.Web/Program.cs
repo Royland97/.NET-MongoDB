@@ -12,6 +12,8 @@ using Core.DataAccess.IRepository.Yelp;
 using Infrastructure.DataAccess.Repository.Yelp;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver.Core.Configuration;
+using MongoDB.Driver;
 
 namespace UserInterface.Web
 {
@@ -39,7 +41,7 @@ namespace UserInterface.Web
             #region Services
 
             //DBContext
-            builder.Services.AddDbContext<ApplicationDbContext>(options => 
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMongoDB(builder.Configuration.GetConnectionString("MongoDB"), "yelp"));
 
             //Authentication and Authorization
@@ -91,7 +93,7 @@ namespace UserInterface.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-
+            /*
             //Swagger
             builder.Services.AddSwaggerGen(options => {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "API .NET 6.0" });
@@ -119,7 +121,7 @@ namespace UserInterface.Web
                     }
                 });
             });
-
+            */
             //Dependencies
             builder.Services.AddScoped(typeof(IEndPointServices), typeof(EndPointServices));
             builder.Services.AddScoped(typeof(ITokenServices), typeof(TokenServices));
@@ -173,11 +175,12 @@ namespace UserInterface.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllers();/*
+            app.MapGet("/", () => Results.Redirect("/Home/Index"));
+            //app.MapControllers();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            */
+            
             app.Run();
 
             #endregion

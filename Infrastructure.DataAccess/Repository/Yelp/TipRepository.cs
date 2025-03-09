@@ -14,5 +14,6 @@ namespace Infrastructure.DataAccess.Repository.Yelp
             base(context)
         {
         }
+
     }
 }

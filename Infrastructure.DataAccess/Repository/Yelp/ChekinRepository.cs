@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.IRepository.Yelp;
 using Core.Domain.Yelp;
 using Infrastructure.DataAccess.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository.Yelp
 {
@@ -13,6 +14,16 @@ namespace Infrastructure.DataAccess.Repository.Yelp
         public ChekinRepository(ApplicationDbContext context):
             base(context)
         {
+        }
+
+        /// <summary>
+        /// Obtiene un chekin dado un businessId
+        /// </summary>
+        /// <param name="businessId"></param>
+        /// <returns></returns>
+        public async Task<Chekin> GetChekinByBusinessId(string businessId)
+        {
+            return await dbSet.Where(p => p.BusinessId == businessId).FirstOrDefaultAsync();
         }
     }
 }
