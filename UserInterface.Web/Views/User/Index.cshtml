@@ -42,9 +42,14 @@
                 <td>@Html.DisplayFor(modelItem => item.Fans)</td>
                 <td>@Html.DisplayFor(modelItem => item.AverageStars)</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.UserId" class="btn-link">Details</a>
-                    <a asp-action="ReviewBusiness" asp-route-id="@item.UserId" class="btn-link">Reviews</a>
-                    <a asp-action="TipsBusiness" asp-route-id="@item.UserId" class="btn-link">Tips</a>
+                    <div class="dropdown">
+                        <button class="btn btn-primary">Actions</button>
+                        <div class="dropdown-content">
+                            <a href="@Url.Action("Details", new { id = item.UserId })">Details</a>
+                            <a href="@Url.Action("ReviewBusiness", new { id = item.UserId })">Reviews</a>
+                            <a href="@Url.Action("TipsBusiness", new { id = item.UserId })">Tips</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }

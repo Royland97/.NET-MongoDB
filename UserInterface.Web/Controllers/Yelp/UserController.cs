@@ -1,5 +1,4 @@
-﻿using System.Drawing.Printing;
-using AutoMapper;
+﻿using AutoMapper;
 using Core.DataAccess.IRepository.Yelp;
 using Core.Domain.Yelp;
 using Microsoft.AspNetCore.Mvc;

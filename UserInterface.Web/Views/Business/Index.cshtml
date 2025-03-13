@@ -46,8 +46,13 @@
                 <td>@Html.DisplayFor(modelItem => item.ReviewCount)</td>
                 <td>@Html.DisplayFor(modelItem => item.IsOpen)</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.BusinessId" class="btn-link">Details</a>
-                    <a asp-action="Reviews" asp-route-id="@item.BusinessId" class="btn-link">Reviews</a>
+                    <div class="dropdown">
+                        <button class="btn btn-primary">Actions</button>
+                        <div class="dropdown-content">
+                            <a href="@Url.Action("Details", new { id = item.BusinessId })">Details</a>
+                            <a href="@Url.Action("Reviews", new { id = item.BusinessId })">Reviews</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }

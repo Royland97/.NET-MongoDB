@@ -25,15 +25,15 @@ body {
     text-decoration: none; /* Elimina el subrayado */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
-    color: black; /* Color de texto (azul) */
-    background-color: lightblue; /* Fondo transparente */
+    color: black; /* Color de texto  */
+    background-color: lightblue; 
     transition: background-color 0.3s, color 0.3s; /* Transiciones suaves para el color y fondo */
     padding: 8px 15px;
 }
 
 /* Efecto cuando se pasa el cursor sobre el enlace */
 .btn-link:hover {
-    background-color: #f0f0f0; /* Fondo gris claro al pasar el mouse */
+    background-color: lightblue; /* Fondo gris claro al pasar el mouse */
     color: #0056b3; /* Cambiar color del texto a un azul más oscuro */
 }
 
@@ -67,4 +67,33 @@ body {
     background-color: lightblue;
     color: #004085;
     border-radius: 4px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
 }
