@@ -1,0 +1,45 @@
+﻿@using Core.Domain.Yelp
+@using UserInterface.Web.ViewModels.Yelp
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TipsBusiness>
+<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "User Reviews";
+}
+<h1>Tips</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tip</th>
+            <th>Date</th>
+            <th>Cumpliment Count</th>
+            <th>Business Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Text)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CumplimentCount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.City)</td>
+                    <td>@Html.DisplayFor(modelItem => item.State)</td>
+                </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("TipsBusiness", new { page }))
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Drawing.Printing;
+using AutoMapper;
 using Core.DataAccess.IRepository.Yelp;
 using Core.Domain.Yelp;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,18 @@ namespace UserInterface.Web.Controllers.Yelp
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly ITipRepository _tipRepository;
 
         public UserController(
             IMapper mapper,
             IUserRepository userRepository,
-            IReviewRepository reviewRepository)
+            IReviewRepository reviewRepository,
+            ITipRepository tipRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _reviewRepository = reviewRepository;
+            _tipRepository = tipRepository;
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace UserInterface.Web.Controllers.Yelp
         }
 
         /// <summary>
-        /// Gets an User by Id.
+        /// Gets all Reviews and Business related from an User Id.
         /// </summary>
         /// 
         /// <param name="id">User Id</param>
@@ -83,6 +87,27 @@ namespace UserInterface.Web.Controllers.Yelp
             int pageNumber = page ?? 1;
 
             return View(reviewBusinesses.ToPagedList(pageNumber, pageSize));
+        }
+
+        /// <summary>
+        /// Gets all Tips and Business related from an User Id
+        /// </summary>
+        /// 
+        /// <param name="id">User Id</param>
+        [HttpGet("/tipsBusiness/{id}")]
+        public async Task<IActionResult> TipsBusiness(
+            int? page,
+            [FromRoute] string id)
+        {
+            var tipsBusiness = _tipRepository.GetTipsBusinessByUserId(id);
+
+            if (tipsBusiness == null)
+                return NotFound(id);
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+
+            return View(tipsBusiness.ToPagedList(pageNumber, pageSize));
         }
 
         /// <summary>

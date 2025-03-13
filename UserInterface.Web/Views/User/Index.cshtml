@@ -1,7 +1,6 @@
 ﻿@using UserInterface.Web.ViewModels.Yelp
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<UserModel>
-<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "User List";
@@ -43,14 +42,16 @@
                 <td>@Html.DisplayFor(modelItem => item.Fans)</td>
                 <td>@Html.DisplayFor(modelItem => item.AverageStars)</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
-                    <a asp-action="ReviewBusiness" asp-route-id="@item.UserId">Reviews</a>
+                    <a asp-action="Details" asp-route-id="@item.UserId" class="btn-link">Details</a>
+                    <a asp-action="ReviewBusiness" asp-route-id="@item.UserId" class="btn-link">Reviews</a>
+                    <a asp-action="TipsBusiness" asp-route-id="@item.UserId" class="btn-link">Tips</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<br />
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<p>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+<div class="pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

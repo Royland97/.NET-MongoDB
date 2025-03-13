@@ -20,3 +20,51 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.btn-link {
+    text-decoration: none; /* Elimina el subrayado */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    color: black; /* Color de texto (azul) */
+    background-color: lightblue; /* Fondo transparente */
+    transition: background-color 0.3s, color 0.3s; /* Transiciones suaves para el color y fondo */
+    padding: 8px 15px;
+}
+
+/* Efecto cuando se pasa el cursor sobre el enlace */
+.btn-link:hover {
+    background-color: #f0f0f0; /* Fondo gris claro al pasar el mouse */
+    color: #0056b3; /* Cambiar color del texto a un azul más oscuro */
+}
+
+/* Estilo cuando el enlace está activo (es decir, cuando se hace clic) */
+.btn-link:active {
+    background-color: #e0e0e0; /* Fondo gris más oscuro al hacer clic */
+    color: #004085; /* Azul más oscuro al hacer clic */
+}
+
+/* Estilo para los números de la página */
+.pagination a,
+.pagination span {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: black; /* Color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+    background-color: transparent; /* Fondo transparente */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Color al pasar el cursor sobre un número de página */
+.pagination a:hover {
+    background-color: #f0f0f0; /* Fondo azul */
+    color: #0056b3; /* Texto blanco */
+}
+
+/* Estilo cuando el número de página está seleccionado */
+.pagination .active {
+    background-color: lightblue;
+    color: #004085;
+    border-radius: 4px;
+}
