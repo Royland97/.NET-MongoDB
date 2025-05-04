@@ -5,11 +5,11 @@ services:
       context: .
       dockerfile: UserInterface.Web/Dockerfile
     links:
-      - "SqlServer:database"
-  SqlServer:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
-      - ACCEPT_EULA=Y
+      - "mongodb:database"
+  mongodb:
+    image: mongo:latest
     ports:
-      - "1401:1433"
+      - "27017:27017" 
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ADMIN_USER:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ADMIN_PASS:-adminpassword}
